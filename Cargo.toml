@@ -1,0 +1,24 @@
+[package]
+name = "c-ethereum-wallet"
+version = "0.1.0"
+authors = ["tritone11"]
+edition = "2018"
+
+[lib]
+name = "rustwallet"
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+ethereum-tx-sign = { git = "https://github.com/tritone11/ethereum-tx-sign" }
+web3 = { git = "https://github.com/tomusdrw/rust-web3" }
+json = "0.11.13"
+rust-crypto = { git = "https://github.com/tritone11/rust-crypto" }
+emerald-rs = "0.25.0"
+rand = "0.6.1"
+tempdir = "0.3.7"
+base64 = "0.10.0"
+serde_derive = "1.0"
+serde = "1.0"
+ethereum-rust-utils = "0.0.2"
+nanoid = "0.2.0"
+hex = "0.3.2"
