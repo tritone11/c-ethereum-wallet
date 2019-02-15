@@ -99,7 +99,6 @@ pub extern fn get_address() -> &'static str {
 
     let hex_address = h.to_string();
     let checksummed = eth_utils::to_checksum_address(&hex_address);
-    println!("{:?}",checksummed);
     return string_to_static_str(checksummed.to_string())
 }
 
@@ -131,19 +130,13 @@ pub extern fn sign_transaction(nonce: i32, gwei_amount: i32, p_gas_price: i32, p
     // Recipient address
     let r = recipient.to_str().unwrap();
     let recipient_address = H160::from(string_to_static_str(r.to_string()));
-    println!("recipient: {:?}",recipient_address);
     // Get nonce
     let non = U256::from(nonce);
-    println!("{:?}",non);
     // Defining transaction parameters
     let wei_amount = gwei_amount.to_string()+&GWEI_UNIT.to_string();
-    println!("{:?}",wei_amount);
     let val = U256::from_dec_str(&wei_amount).unwrap();
-    println!("{:?}",val);
     let gas = U256::from(p_gas);
-    println!("{:?}",gas);
     let gas_price = U256::from(p_gas_price);
-    println!("{:?}",gas_price);
 
     // Creating transaction
     let tx = RawTransaction {
@@ -160,12 +153,10 @@ pub extern fn sign_transaction(nonce: i32, gwei_amount: i32, p_gas_price: i32, p
     let CHAIN_ID: u8 = p_chain_id as u8;
     
     let signed_tx = tx.sign(&private_key,&CHAIN_ID);
-    println!("{:?}",signed_tx);
 
     let string_signed_tx = hex::encode(signed_tx);
 
-    println!("{:?}",string_signed_tx);
-    return string_to_static_str(string_signed_tx)
+    return string_to_static_str(string_signed_tx+"\0")
 
 }
 
@@ -189,14 +180,12 @@ pub fn temp_dir() -> PathBuf {
 pub fn keyfile_path(name: &str) -> PathBuf {
     let mut path = keystore_path();
     path.push(name);
-    println!("{:?}", path);
     path
 }
 
 pub fn keystore_path() -> PathBuf {
     let mut buf = PathBuf::from("");
     buf.push("keystore/");
-    println!("{:?}", buf);
     buf
 }
 
